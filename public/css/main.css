@@ -4,9 +4,13 @@
     width: 80%;
     margin: auto;
 }
-
+.mdl-checkbox__delete
+{
+    float: right;
+    color:red;
+}
 .task-list {
-    width: 50%;
+    width: 80%;
     margin: auto;
 }
 @media only screen and (max-width: 640px) {
