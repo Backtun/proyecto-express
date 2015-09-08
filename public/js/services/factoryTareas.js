@@ -14,10 +14,7 @@ app.factory('factoryTareas',["$http",function($http){
                 return $http.remove(urlBase+tarea.id);
             },
             getAll : function(){
-               $http.get(urlBase)
-               .success(function(data){
-               		return data;
-               });
+               return $http.get(urlBase);
             }
         }
     }]);

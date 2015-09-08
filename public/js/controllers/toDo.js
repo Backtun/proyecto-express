@@ -3,8 +3,17 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
 	//Inicio cantidad de tareas
 	$scope.cantidad=0;
 	$scope.tareas=[];
-	
-	tareas.getAll();
+	$scope.status ='';
+	getTareas();
+	function getTareas() {
+        tareas.getAll()
+            .success(function (data) {
+                $scope.tareas = data;
+            })
+            .error(function (error) {
+                $scope.status = 'Unable to load customer data: ' + error.message;
+            });
+    }
 
 	$scope.eliminar= function(id)
 	{
