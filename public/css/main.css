@@ -7,8 +7,12 @@
 .mdl-checkbox__delete
 {
     float: right;
+}
+
+.mdl-checkbox__delete .material-icons {
     color:red;
 }
+
 .task-list {
     width: 80%;
     margin: auto;
@@ -61,7 +65,7 @@
 }
 
 .task-list .mdl-textfield {
-    width: 100%;
+    width: 80%;
 }
 
 
