@@ -149,7 +149,6 @@ modulo.get('/api/tareas', function( req, res) {
             "completada":false
         }
 ];
-
     res.json(datos);
 });
 
