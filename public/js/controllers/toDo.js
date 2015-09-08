@@ -9,6 +9,7 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
         tareas.getAll()
             .success(function (data) {
                 $scope.tareas = data;
+                $scope.cantidad= $scope.tareas.length;
             })
             .error(function (error) {
                 $scope.status = 'Unable to load customer data: ' + error.message;
