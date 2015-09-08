@@ -7,21 +7,37 @@ app.config(function($interpolateProvider) {
 
 app.controller('toDoCtrl',['$scope','$http',function($scope,$http)
 {
-	$scope.tareas = 
-	[
-		{
-			"id":"1",
-			"nombre":"Hacer el proyecto de express",
-			"completada":"true"
-		},
-		{
-			"id":"2",
-			"nombre":"Conquistar el mundo",
-			"completada":"false"
-		}
-	];
+	//Inicio cantidad de tareas
+	$scope.cantidad=0;
+	function getTareas()
+	{  
+		$http.get("/api/tareas")
+			.success(function(data){
+				$scope.tareas = data;
+				$scope.cantidad=$scope.tareas.length;
+			});
+	}
 
-	//Cantidad de tareas
-	$scope.cantidad=$scope.tareas.length;
+	getTareas();
+
+	$scope.eliminar= function(id)
+	{
+		for(f=0;f<$scope.tareas.length;f++)
+		  {
+		    if($scope.tareas[f].id == id)
+		    {
+		    	$scope.tareas.splice(f,(f+1));
+		    	break;
+		    }
+		  }
+	}
+
+	$scope.cambiarEstado = function(tarea)
+	{
+		$http.post('/' + tarea.id + '/completado',{completado:tarea.completado})
+		.then(function(response) {
+	    	console.log("La tarea "+tarea.nombre+" se encuentra "+tarea.completada);
+  		});
+	}
 }
 ]);
