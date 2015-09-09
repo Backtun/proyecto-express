@@ -147,6 +147,11 @@ modulo.get('/api/tareas', function( req, res) {
             "id":uuid.v4(),
             "nombre":"Aprender angular",
             "completada":false
+        },
+        {
+            "id":uuid.v4(),
+            "nombre":"Aprender js",
+            "completada":false
         }
 ];
     res.json(datos);

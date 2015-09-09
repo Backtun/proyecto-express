@@ -12,7 +12,7 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
                 $scope.cantidad= $scope.tareas.length;
             })
             .error(function (error) {
-                $scope.status = 'Unable to load customer data: ' + error.message;
+                console.log('No se puedo cargar los datos: ' + error.message);
             });
     }
 
@@ -22,10 +22,15 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
 		  {
 		    if($scope.tareas[f].id == id)
 		    {
-		    	$scope.tareas.splice(f,(f+1));
+		    	//console.log($scope.tareas[f].id+" == "+id);
+		    	$scope.tareas.splice(f,1);
 		    	break;
 		    }
 		  }
+	}
+
+	$scope.agregar = function() {
+		
 	}
 }
 ]);

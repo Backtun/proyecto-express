@@ -8,7 +8,10 @@
 {
     float: right;
 }
-
+.mdl-checkbox 
+{
+    height: 32px;
+}
 .mdl-checkbox__delete .material-icons {
     color:red;
 }
