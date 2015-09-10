@@ -5,7 +5,7 @@
 		</div>
 		
       <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" data-upgraded=",MaterialButton,MaterialRipple">
-        <i class="material-icons" ng-click="">add_box</i>
+        <i class="material-icons" ng-click="agregar(tarea)">add_box</i>
       </button>
 
 	<div class="task-item" ng-repeat="tarea in tareas | filter: {completada:filtro}">

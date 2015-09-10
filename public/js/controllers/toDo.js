@@ -49,8 +49,13 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
 		  }
 	}
 
-	$scope.agregar = function() {
-		
-	}
+	$scope.agregar = function(titilo) {
+		$scope.tareas.push(
+		{
+            "id":"7ae6c6c1-78f1-486a-b7e4-159be010b73f",
+            "nombre":titilo,
+            "completada":true
+		});
+		}
 }
 ]);
