@@ -27,35 +27,50 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
 	$scope.estaActivo = function(estado)
 	{
 		if(estado==='pendientes' && $scope.filtro === false)
-		{return true}
+			{return true}
 		else if(estado==='todas' && $scope.filtro === undefined)
-		{return true}
+			{return true}
 		else if(estado==='completas' && $scope.filtro === true)
-		{return true}
+			{return true}
 		else
-		{return false}
+			{return false}
 	}
 	
-	$scope.eliminar= function(id)
+	$scope.eliminar= function(tarea)
+	{
+		var indice = buscar(tarea.id);
+		$scope.tareas.splice(indice,1);
+		console.log("ELIMINO: Se elimino la tarea ´"+tarea.nombre+"´");
+	}
+
+	buscar= function(id)
 	{
 		for(f=0;f<$scope.tareas.length;f++)
 		  {
 		    if($scope.tareas[f].id == id)
 		    {
-		    	//console.log($scope.tareas[f].id+" == "+id);
-		    	$scope.tareas.splice(f,1);
+		    	return f;
 		    	break;
 		    }
 		  }
 	}
 
-	$scope.agregar = function(titilo) {
+	$scope.agregar = function(titilo) 
+	{
 		$scope.tareas.push(
 		{
-            "id":"7ae6c6c1-78f1-486a-b7e4-159be010b73f",
+            "id":Date.now(),
             "nombre":titilo,
-            "completada":true
+            "completada":false
 		});
-		}
+		console.log("NUEVO: se agrego la tarea ´"+titilo+"´");
+	}
+
+	$scope.cambiarEstado= function(tarea)
+	{
+		var indice=buscar(tarea.id);
+		$scope.tareas[indice].completada=!tarea.completada;
+		console.log("CAMBIO: La tarea ´"+tarea.nombre+"´ ahora esta "+$scope.tareas[indice].completada);
+	}
 }
 ]);
