@@ -4,7 +4,10 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
 	$scope.cantidad=0;
 	$scope.tareas=[];
 	$scope.status ='';
+	$scope.filtro=undefined;
 	getTareas();
+
+
 	function getTareas() {
         tareas.getAll()
             .success(function (data) {
@@ -16,6 +19,23 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
             });
     }
 
+	$scope.setFiltro = function(estado)
+	{
+		$scope.filtro=estado;
+	}
+
+	$scope.estaActivo = function(estado)
+	{
+		if(estado==='pendientes' && $scope.filtro === false)
+		{return true}
+		else if(estado==='todas' && $scope.filtro === undefined)
+		{return true}
+		else if(estado==='completas' && $scope.filtro === true)
+		{return true}
+		else
+		{return false}
+	}
+	
 	$scope.eliminar= function(id)
 	{
 		for(f=0;f<$scope.tareas.length;f++)
