@@ -1,13 +1,14 @@
 <div class="task-list mdl-card mdl-shadow--2dp">
-		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-			<input class="mdl-textfield__input" ng-model="tarea" type="text" id="titulo" name="titulo" />
-			<label class="mdl-textfield__label" for="titulo">Qué quieres hacer hoy...</label>
-		</div>
-		
-      <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" data-upgraded=",MaterialButton,MaterialRipple">
-        <i class="material-icons" ng-click="agregar(tarea)">add_box</i>
-      </button>
-
+	<div>
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+				<input class="mdl-textfield__input" ng-model="tarea" type="text" id="titulo" name="titulo" />
+				<label class="mdl-textfield__label" for="titulo">Qué quieres hacer hoy...</label>
+			</div>
+			
+	      <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" data-upgraded=",MaterialButton,MaterialRipple">
+	        <i class="material-icons" ng-click="agregar(tarea)">add_box</i>
+	      </button>
+	</div>
 	<div class="task-item" ng-repeat="tarea in tareas | filter: {completada:filtro}">
 		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-card__supporting-text" for="[{tarea.id}]">
 			<input type="checkbox" id="[{tarea.id}]" class="mdl-checkbox__input" ng-checked="[{tarea.completada}]" ng-click='cambiarEstado(tarea,tarea.completada)'/>
