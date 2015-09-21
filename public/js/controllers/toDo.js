@@ -70,6 +70,7 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
 
 	$scope.agregar = function(titilo) 
 	{
+		$scope.tarea='';
 		$scope.tareas.push(
 		{
             "id":Date.now(),
