@@ -85,6 +85,7 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
 		var indice=$scope.tareas.indexOf(tarea);
 		$scope.tareas[indice].completada=!tarea.completada;
 		console.log("CAMBIO: La tarea ´"+tarea.nombre+"´ ahora esta "+$scope.tareas[indice].completada);
+		actualizarContador();
 	}
 }
 ]);
