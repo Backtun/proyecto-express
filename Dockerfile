@@ -1,0 +1,5 @@
+FROM node
+
+
+
+EXPOSE 8000

@@ -1,8 +1,9 @@
 var express = require('express');
 var exphbs  = require('express-handlebars');
-var tareas = require('./modules/tarea/rutas');
+var tareas = require('./controllers/Tareas');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var config = require('./config').server;
 
 // Creo la instancia de express
 var app = express();
@@ -31,8 +32,13 @@ var hbs = exphbs.create({
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
+app.get('/',function(req,res)
+{
+    res.render('tarea/lista');
+})
+
 // Monto las rutas
-app.use('/', tareas);
+app.use(tareas);
 
 // Manejo de paginas no encontradas
 app.use(function(req, res) {
@@ -46,8 +52,8 @@ app.use(function(err, req, res, next) {
 });
 
 // Defino el puerto en el que escucha el servidor. Puede venir por
-// variables de entorno (por heroku) o usar el 8000
-app.set('port', (process.env.PORT || 8000));
+// variables de entorno (por heroku) o usar el puerto declarado en config.js
+app.set('port', (process.env.PORT || config.puerto));
 
 // Escucho en el puerto indicado
 app.listen(app.get('port'), function () {
