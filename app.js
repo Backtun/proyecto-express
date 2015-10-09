@@ -1,9 +1,11 @@
 var express = require('express');
 var exphbs  = require('express-handlebars');
-var tareas = require('./controllers/Tareas');
+var tareas = require('./controllers/TareasCtrl');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var config = require('./config').server;
+var mongoose = require('mongoose'); 
+var tareas = require('./routers/Tareas');
 
 // Creo la instancia de express
 var app = express();
@@ -56,6 +58,12 @@ app.use(function(err, req, res, next) {
 app.set('port', (process.env.PORT || config.puerto));
 
 // Escucho en el puerto indicado
-app.listen(app.get('port'), function () {
+mongoose.connect('mongodb://172.17.0.1/Tareas', function(err, res) {  
+  if(err) {
+    console.log('ERROR: Al conectar a la base de datos. ' + err);
+  }
+  app.listen(app.get('port'), function () {
     console.log('Escuchando en el puerto %d', app.get('port'));
+    });
 });
+
