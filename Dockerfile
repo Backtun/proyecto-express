@@ -1,5 +1,5 @@
-FROM node
+FROM node:0.10-onbuild
 
 
 
-EXPOSE 8000
+EXPOSE 3000

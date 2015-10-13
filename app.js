@@ -4,6 +4,7 @@ var tareas = require('./controllers/TareasCtrl');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var config = require('./config').server;
+var db     = require('./config').db;
 var mongoose = require('mongoose'); 
 var tareas = require('./routers/Tareas');
 
@@ -58,7 +59,7 @@ app.use(function(err, req, res, next) {
 app.set('port', (process.env.PORT || config.puerto));
 
 // Escucho en el puerto indicado
-mongoose.connect('mongodb://172.17.0.1/Tareas', function(err, res) {  
+mongoose.connect('mongodb://'+db.host+'/Tareas', function(err, res) {  
   if(err) {
     console.log('ERROR: Al conectar a la base de datos. ' + err);
   }
