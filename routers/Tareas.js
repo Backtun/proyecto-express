@@ -2,13 +2,11 @@ var express = require('express');
 var router  = express.Router();
 var tareas = require('../controllers/TareasCtrl');
 
-router.route('/tareas')  
+router.route('/api/tareas')  
   .get(tareas.getAll)
   .post(tareas.agregar);
-/*
-router.route('/tareas/:id')  
-  .get(tareas.findById)
-  .put(tareas.updateTVShow)
-  .delete(tareas.deleteTVShow);
-*/
+
+router.route('/api/tareas/:id')  
+  .delete(tareas.borrar);
+
 module.exports= router;

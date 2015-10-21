@@ -50,7 +50,7 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
        }else{
 	       $scope.tareas.map(function(ele)
 		       	{
-		       		if(ele.completada === $scope.filtro)
+		       		if(ele.completa === $scope.filtro)
 		       		{
 		       			 $scope.cantidad=$scope.cantidad+1;
 		       		}
@@ -61,31 +61,39 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
 	
 	$scope.eliminar= function(tarea)
 	{
-		var indice=$scope.tareas.indexOf(tarea);
-		$scope.tareas.splice(indice,1);
-		console.log("ELIMINO: Se elimino la tarea ´"+tarea.nombre+"´");
-		actualizarContador();
+		console.log(tarea);
+		tareas.borrar(tarea)
+            .success(function(tarea) {
+            	var indice=$scope.tareas.indexOf(tarea);
+				$scope.tareas.splice(indice,1);
+				console.log("ELIMINO: Se elimino la tarea ´"+tarea.nombre+"´");
+				actualizarContador();
+            })
+            .error(function (error) {
+                console.log('No se puedo cargar los datos: ' + error.message);
+            });
 	}
 
 
-	$scope.agregar = function(titilo) 
+	$scope.agregar = function(titulo) 
 	{
+		tareas.add({'titulo':titulo})
+            .success(function (data) {
+            	$scope.tareas.push(data);
+            })
+            .error(function (error) {
+                console.log('No se puedo cargar los datos: ' + error.message);
+            });
 		$scope.tarea='';
-		$scope.tareas.push(
-		{
-            "id":Date.now(),
-            "nombre":titilo,
-            "completada":false
-		});
-		console.log("NUEVO: se agrego la tarea ´"+titilo+"´");
+		console.log("NUEVO: se agrego la tarea ´"+titulo+"´");
 		actualizarContador();
 	}
 
 	$scope.cambiarEstado= function(tarea)
 	{
 		var indice=$scope.tareas.indexOf(tarea);
-		$scope.tareas[indice].completada=!tarea.completada;
-		console.log("CAMBIO: La tarea ´"+tarea.nombre+"´ ahora esta "+$scope.tareas[indice].completada);
+		$scope.tareas[indice].completa=!tarea.completa;
+		console.log("CAMBIO: La tarea ´"+tarea.nombre+"´ ahora esta "+$scope.tareas[indice].completa);
 		actualizarContador();
 	}
 }
