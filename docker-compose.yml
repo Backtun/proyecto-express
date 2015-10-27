@@ -1,6 +1,7 @@
 db:
-  image: mongo
-
+    image: mongo
+    volumes:
+    - ./db:/data/db
 app:
     build: .
     ports:

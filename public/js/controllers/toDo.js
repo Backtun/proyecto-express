@@ -65,8 +65,8 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
 		tareas.borrar(tarea)
             .success(function(tarea) {
             	var indice=$scope.tareas.indexOf(tarea);
-				$scope.tareas.splice(indice,1);
 				console.log("ELIMINO: Se elimino la tarea ´"+tarea.nombre+"´");
+				$scope.tareas.splice(indice,1);
 				actualizarContador();
             })
             .error(function (error) {
@@ -77,16 +77,16 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
 
 	$scope.agregar = function(titulo) 
 	{
-		tareas.add({'titulo':titulo})
+		tareas.agregar({'titulo':titulo})
             .success(function (data) {
             	$scope.tareas.push(data);
+				$scope.tarea='';
+				console.log("NUEVO: se agrego la tarea ´"+titulo+"´");
+				actualizarContador();
             })
             .error(function (error) {
-                console.log('No se puedo cargar los datos: ' + error.message);
+                alert('No se puedo cargar los datos: ' + error.message);
             });
-		$scope.tarea='';
-		console.log("NUEVO: se agrego la tarea ´"+titulo+"´");
-		actualizarContador();
 	}
 
 	$scope.cambiarEstado= function(tarea)

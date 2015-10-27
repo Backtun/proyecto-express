@@ -3,8 +3,11 @@ app.factory('factoryTareas',["$http",function($http){
         var urlBase='api/tareas/';
 
         return {
-            add : function(tarea){
+            agregar : function(tarea){
                 return $http.post(urlBase,tarea);
+            },
+            actualizar: function(id){
+                return $http.update(urlBase+id);
             },
             borrar: function(id){
                 return $http.delete(urlBase+id);
