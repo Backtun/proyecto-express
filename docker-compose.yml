@@ -4,7 +4,9 @@ db:
     - ./db:/data/db
 app:
     build: .
+    environment:
+        VIRTUAL_HOST: "acamica.facurubin.com.ar"
     ports:
-    - "3000:3000"
+    - "3002:3000"
     links:
     - db

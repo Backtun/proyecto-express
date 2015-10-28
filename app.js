@@ -59,7 +59,7 @@ app.use(function(err, req, res, next) {
 app.set('port', (process.env.PORT || config.puerto));
 
 // Escucho en el puerto indicado
-mongoose.connect('mongodb://'+db.host+'/Tareas', function(err, res) {  
+mongoose.connect('@mongodb://'+db.host+'/Tareas', function(err, res) {  
   if(err) {
     console.log('ERROR: Al conectar a la base de datos. ' + err);
   }
