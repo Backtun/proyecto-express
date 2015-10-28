@@ -7,6 +7,7 @@ router.route('/api/tareas')
   .post(tareas.agregar);
 
 router.route('/api/tareas/:id')  
-  .delete(tareas.borrar);
+  .delete(tareas.borrar)
+  .put(tareas.actualizar);
 
 module.exports= router;

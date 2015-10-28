@@ -7,7 +7,6 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
 	$scope.filtro=undefined;
 	getTareas();
 
-
 	function getTareas() {
         tareas.getAll()
             .success(function (data) {
@@ -17,6 +16,16 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
             .error(function (error) {
                 console.log('No se puedo cargar los datos: ' + error.message);
             });
+    }
+
+    $scope.estaVacio= function()
+    {
+    	if($scope.cantidad===0)
+    	{
+    		return true;
+    	}else{
+    		return false;
+    	}
     }
 
 	$scope.setFiltro = function(estado)
@@ -61,7 +70,6 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
 	
 	$scope.eliminar= function(tarea)
 	{
-		console.log(tarea);
 		tareas.borrar(tarea)
             .success(function(tarea) {
             	var indice=$scope.tareas.indexOf(tarea);
@@ -93,8 +101,11 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
 	{
 		var indice=$scope.tareas.indexOf(tarea);
 		$scope.tareas[indice].completa=!tarea.completa;
-		console.log("CAMBIO: La tarea ´"+tarea.nombre+"´ ahora esta "+$scope.tareas[indice].completa);
-		actualizarContador();
+		tareas.actualizar(tarea)
+		.success(function (data) {	
+			console.log("CAMBIO: La tarea ´"+tarea.nombre+"´ ahora esta "+$scope.tareas[indice].completa);
+			actualizarContador();
+		});
 	}
 }
 ]);

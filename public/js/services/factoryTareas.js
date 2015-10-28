@@ -6,8 +6,8 @@ app.factory('factoryTareas',["$http",function($http){
             agregar : function(tarea){
                 return $http.post(urlBase,tarea);
             },
-            actualizar: function(id){
-                return $http.update(urlBase+id);
+            actualizar: function(tarea){
+                return $http.put(urlBase+tarea._id,tarea);
             },
             borrar: function(id){
                 return $http.delete(urlBase+id);

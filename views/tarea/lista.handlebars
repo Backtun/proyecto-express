@@ -9,7 +9,7 @@
 	        <i class="material-icons" ng-click="agregar(tarea)">add_box</i>
 	      </button>
 	</div>
-	<div class="task-item" ng-repeat="tarea in tareas | filter: {completada:filtro}">
+	<div class="task-item" ng-repeat="tarea in tareas | filter: {completa:filtro}" ng-hide="estaVacio()">
 		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-card__supporting-text" for="[{tarea.id}]">
 			<input type="checkbox" id="[{tarea.id}]" class="mdl-checkbox__input" ng-checked="[{tarea.completa}]" ng-click='cambiarEstado(tarea)'/>
 			<span class="mdl-checkbox__label">[{tarea.titulo}]</span>
@@ -18,7 +18,10 @@
 	      </button>
 		</label>
 	</div>
-
+	
+	<div class="task-item" ng-show="estaVacio()">
+		<h3>No tenes ninguna tarea.</h3>
+	</div>
 	<div class="mdl-card__actions mdl-grid">
 		<div class="mdl-cell mdl-cell--5-col">
 			<span class="pending-task-count">[{cantidad}]</span> tareas pendientes
