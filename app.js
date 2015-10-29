@@ -7,6 +7,7 @@ var config = require('./config').server;
 var db     = require('./config').db;
 var mongoose = require('mongoose'); 
 var tareas = require('./routers/Tareas');
+var db     = require('./controllers/mongo')
 
 // Creo la instancia de express
 var app = express();
@@ -59,12 +60,8 @@ app.use(function(err, req, res, next) {
 app.set('port', (process.env.PORT || config.puerto));
 
 // Escucho en el puerto indicado
-mongoose.connect('@mongodb://'+db.host+'/Tareas', function(err, res) {  
-  if(err) {
-    console.log('ERROR: Al conectar a la base de datos. ' + err);
-  }
-  app.listen(app.get('port'), function () {
+app.listen(app.get('port'), function () {
     console.log('Escuchando en el puerto %d', app.get('port'));
-    });
 });
+
 

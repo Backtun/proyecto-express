@@ -5,8 +5,6 @@ module.exports = {
 	},
 	"db":
 	{
-		"host":"db",
-		"puerto":27017,
-		"nombre":"Tareas"
+		"url":"mongodb://db/Tareas",
 	}
 }
