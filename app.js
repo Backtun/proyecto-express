@@ -4,10 +4,7 @@ var tareas = require('./controllers/TareasCtrl');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var config = require('./config').server;
-var db     = require('./config').db;
-var mongoose = require('mongoose'); 
 var tareas = require('./routers/Tareas');
-var db     = require('./controllers/mongo')
 
 // Creo la instancia de express
 var app = express();

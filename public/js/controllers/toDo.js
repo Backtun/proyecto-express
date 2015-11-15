@@ -7,6 +7,10 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
 	$scope.filtro=undefined;
 	getTareas();
 
+/**************************     
+	Funcion pedir tareas               
+
+***************************/
 	function getTareas() {
         tareas.getAll()
             .success(function (data) {
@@ -17,7 +21,10 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
                 console.log('No se puedo cargar los datos: ' + error.message);
             });
     }
-
+/**************************     
+	Funcion pedir tareas               
+	
+***************************/
     $scope.estaVacio= function()
     {
     	if($scope.cantidad===0)
@@ -44,12 +51,10 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
 		else
 			{return false}
 	};
-
-	$scope.$watch('filtro', function() {
-       $scope.cantidad=0;
-       actualizarContador();
-   	});
-
+/******************************************************    
+	Funcion contar tareas (Todas/Completas/Pendientes)               
+	
+*******************************************************/
    	function actualizarContador()
    	{
    		$scope.cantidad=0;
@@ -67,10 +72,22 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
 	       	);
    		}
    	}
+/********************************************************************     
+	Evento que escucha el cambio de filtro y actualizar el contador              
 	
+*********************************************************************/
+	$scope.$watch('filtro', function() {
+       $scope.cantidad=0;
+       actualizarContador();
+   	});
+/********************************************     
+	Funcion eliminar tarea por id               
+	
+*********************************************/	
 	$scope.eliminar= function(tarea)
 	{
-		tareas.borrar(tarea)
+		console.log(tarea._id);	
+		tareas.borrar(tarea._id)
             .success(function(tarea) {
             	var indice=$scope.tareas.indexOf(tarea);
 				console.log("ELIMINO: Se elimino la tarea ´"+tarea.nombre+"´");
@@ -81,7 +98,10 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
                 console.log('No se puedo cargar los datos: ' + error.message);
             });
 	}
-
+/********************************************     
+	Funcion agregar nueva tareas               
+	
+*********************************************/
 
 	$scope.agregar = function(titulo) 
 	{
@@ -96,7 +116,10 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
                 alert('No se puedo cargar los datos: ' + error.message);
             });
 	}
-
+/**************************************************************     
+	Funcion cambiar estado de tarea (completa o incompleta)               
+	
+***************************************************************/
 	$scope.cambiarEstado= function(tarea)
 	{
 		var indice=$scope.tareas.indexOf(tarea);

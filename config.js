@@ -5,6 +5,6 @@ module.exports = {
 	},
 	"db":
 	{
-		"url":"mongodb://db/Tareas",
+		"url":'mongodb://172.17.0.13:27017/Tareas',
 	}
 }
