@@ -122,7 +122,7 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
 	$scope.cambiarEstado= function(tarea)
 	{
 		var indice=$scope.tareas.indexOf(tarea);
-		$scope.tareas[indice].completa=!tarea.completa;
+		$scope.tareas[indice].completada=!tarea.completada;
 		tareas.actualizar(tarea)
 		.success(function (data) {	
 			console.log("CAMBIO: La tarea ´"+tarea.nombre+"´ ahora esta "+$scope.tareas[indice].completa);

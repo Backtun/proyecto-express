@@ -85,15 +85,25 @@ exports.borrar = function(req, res) {
 };
 
 exports.actualizar = function(req, res) {  
-    Tarea.findById(req.params.id, function(err, tarea) {
-        tarea.title     = req.body.titulo;
-        tarea.completa  = req.body.completa;
-        tarea.idUsuario = req.body.idUsuario;
+ 
+    base.then(function (base) {
 
-        tarea.save(function(err) {
-            if(err) return res.send(500, err.message);
-            console.log('UPDATE api/tareas '+req.params.id);  
-            res.status(200).jsonp(tarea);
-        });
+    var tareas = base.collection('Tareas');
+        
+        tareas.update({_id : new mongodb.ObjectID(req.params.id)},{ $set: {completada:req.body.completada}})
+
+            .then(function(resultado)
+            {
+                console.log('update api/tareas '+req.params.id);    
+                res.status(200).jsonp(resultado);
+            })
+            .catch(function (err) {
+                console.error('Error al actualizar ', err.message);
+                res.status(500).send(err);
+            });
+    })
+    .catch(function (err) {
+            console.error('Error al conectar ', err.message);
+            res.status(500).send(err);
     });
 };
