@@ -34,7 +34,7 @@ exports.agregar = function(req, res)
     var NuevaTarea = {
         titulo:req.body.titulo,
         completada:false,
-        fecha:Date.now(),
+        
         idUsuario:req.session.id
     };
 
@@ -42,7 +42,7 @@ exports.agregar = function(req, res)
 
         var tareas = base.collection('Tareas');
         
-        tareas.insertOne(NuevaTarea)
+        tareas.insertOne(NuevaTarea,fecha: new Date())
 
             .then(function(resultado) {
                 console.log('POST api/tareas '+resultado.insertedId);

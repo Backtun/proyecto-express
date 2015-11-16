@@ -13,7 +13,7 @@ var app = express();
 app.use(session({
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 9*60*1000 }, // Expira en 9 minutos (ver modelo para saber porque)
+    cookie: { maxAge: 60*60*1000 }, // Expira en 9 minutos (ver modelo para saber porque)
     secret: 'sshhhh es un secreto'
 }));
 
