@@ -34,6 +34,7 @@ exports.agregar = function(req, res)
     var NuevaTarea = {
         titulo:req.body.titulo,
         completada:false,
+        fecha:Date.now(),
         idUsuario:req.session.id
     };
 
