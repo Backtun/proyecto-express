@@ -86,16 +86,15 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
 *********************************************/	
 	$scope.eliminar= function(tarea)
 	{
-		console.log(tarea._id);	
 		tareas.borrar(tarea._id)
-            .success(function(tarea) {
+            .success(function(res) {
             	var indice=$scope.tareas.indexOf(tarea);
-				console.log("ELIMINO: Se elimino la tarea ´"+tarea.nombre+"´");
+				console.log("ELIMINO: Se elimino la tarea ´"+tarea.titulo+"´");
 				$scope.tareas.splice(indice,1);
 				actualizarContador();
             })
             .error(function (error) {
-                console.log('No se puedo cargar los datos: ' + error.message);
+                console.log('No se puedo borrar la tarea: ' + error.message);
             });
 	}
 /********************************************     

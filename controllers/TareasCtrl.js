@@ -1,19 +1,32 @@
-var mongo = require('mongodb').MongoClient; 
+var mongodb = require('mongodb'); 
 var config   = require('../config').db;
 
-exports.getAll= function(req,res) {
+//Promesa de conexion al server de mongo
+var base = mongodb.MongoClient.connect(config.url)
 
-    mongo.connect(config.url,function (err,base) {
+exports.getAll= function(req, res) {
+    
+    base.then(function (base) {
 
+    //Selecciona la coleccion Tareas
     var tareas = base.collection('Tareas');
 
-    tareas.find({}).toArray(function(err, resultado) {
-        base.close();
-	    console.log('GET api/tareas');
-	    res.status(200).jsonp(resultado);
+    //Una promesa de busqueda de tarea usando un puntero de array
+    var promesa = tareas.find({}).toArray()
+        
+        .then(function(resultado)
+        { 
+            res.status(200).send(resultado);
+        })
+        .catch(function (err) {
+            console.error('Error en get ', err.message);
+            res.status(500).send(err);
         });
+    })
+    .catch(function (err) {
+            console.error('Error al conectar ', err.message);
+            res.status(500).send(err);
     });
-
 };
 
 exports.agregar = function(req, res) 
@@ -24,31 +37,51 @@ exports.agregar = function(req, res)
         idUsuario:req.session.id
     };
 
-    mongo.connect(config.url,function (err,base) {
+    base.then(function (base) {
 
         var tareas = base.collection('Tareas');
-        tareas.insertOne(NuevaTarea,
-            function(err,resultado) {
-            base.close();        
-            console.log('POST api/tareas '+resultado.insertedId);
-        	res.status(200).jsonp(resultado);
+        
+        tareas.insertOne(NuevaTarea)
+
+            .then(function(resultado) {
+                console.log('POST api/tareas '+resultado.insertedId);
+                res.status(200).jsonp(NuevaTarea);      
+            })
+        
+            .catch(function (err) {
+                console.error('Error al agregar: ', err.message);
+                res.status(500).send(err);
             });
+        })
+        
+        .catch(function (err) {
+            console.error('Error al conectar: ', err.message);
+            res.status(500).send(err);
         });
 };
 
 exports.borrar = function(req, res) {  
 
-mongo.connect(config.url,function (err,base)
-{
-        var tareas = base.collection('Tareas');
-        tareas.deleteOne({ _id : req.params.id },
-            function(err,resultado)
+    base.then(function (base) {
+
+    var tareas = base.collection('Tareas');
+        
+        tareas.remove({_id : new mongodb.ObjectID(req.params.id)})
+
+            .then(function(resultado)
             {
-                console.log('DELETE api/tareas '+resultado.insertedId);    
+                console.log('DELETE api/tareas '+req.params.id);    
                 res.status(200).jsonp('Tarea borrada');
-                base.close();
+            })
+            .catch(function (err) {
+                console.error('Error al borrar ', err.message);
+                res.status(500).send(err);
             });
-})
+    })
+    .catch(function (err) {
+            console.error('Error al conectar ', err.message);
+            res.status(500).send(err);
+    });
 };
 
 exports.actualizar = function(req, res) {  
