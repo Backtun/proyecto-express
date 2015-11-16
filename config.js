@@ -5,6 +5,6 @@ module.exports = {
 	},
 	"db":
 	{
-		"url":'mongodb://172.17.0.3:27017/Tareas'
+		"url":'mongodb://node:1234@ds061238.mongolab.com:61238/prueba'
 	}
 }

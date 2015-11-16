@@ -64,7 +64,7 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
        }else{
 	       $scope.tareas.map(function(ele)
 		       	{
-		       		if(ele.completa === $scope.filtro)
+		       		if(ele.completada === $scope.filtro)
 		       		{
 		       			 $scope.cantidad=$scope.cantidad+1;
 		       		}
