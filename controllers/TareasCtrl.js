@@ -18,11 +18,13 @@ exports.getAll= function(req, res) {
         { 
             res.status(200).send(resultado);
         })
+        //Capturo el error al hacer find
         .catch(function (err) {
             console.error('Error en get ', err.message);
             res.status(500).send(err);
         });
     })
+    //Capturo el error al conectar
     .catch(function (err) {
             console.error('Error al conectar ', err.message);
             res.status(500).send(err);
@@ -34,7 +36,6 @@ exports.agregar = function(req, res)
     var NuevaTarea = {
         titulo:req.body.titulo,
         completada:false,
-        
         idUsuario:req.session.id
     };
 
@@ -42,7 +43,7 @@ exports.agregar = function(req, res)
 
         var tareas = base.collection('Tareas');
         
-        tareas.insertOne(NuevaTarea,fecha: new Date())
+        tareas.insertOne(NuevaTarea)
 
             .then(function(resultado) {
                 console.log('POST api/tareas '+resultado.insertedId);
@@ -96,7 +97,7 @@ exports.actualizar = function(req, res) {
             .then(function(resultado)
             {
                 console.log('update api/tareas '+req.params.id);    
-                res.status(200).jsonp(resultado);
+                res.status(200).send('Tarea actualizada.');
             })
             .catch(function (err) {
                 console.error('Error al actualizar ', err.message);

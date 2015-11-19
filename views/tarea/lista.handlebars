@@ -27,9 +27,15 @@
 			<span class="pending-task-count">[{cantidad}]</span> tareas
 		</div>
 		<div class="mdl-cell mdl-cell--7-col">
-			<span class="task-filter" ng-class="{active: estaActivo('todas')}"><a href="#" ng-click="setFiltro()">Todas</a></span>
-			<span class="task-filter" ng-class="{active: estaActivo('pendientes')}"><a href="#" ng-click="setFiltro(false)">Pendientes</a></span>
-			<span class="task-filter" ng-class="{active: estaActivo('completas')}"><a href="#" ng-click="setFiltro(true)">Completas</a></span>
+			<span class="task-filter" ng-class="{active: estaActivo('/todas')}">
+				<a href="#/todas">Todas</a>
+			</span>
+			<span class="task-filter" ng-class="{active: estaActivo('/pendientes')}">
+				<a href="#/pendientes">Pendientes</a>
+			</span>
+			<span class="task-filter" ng-class="{active: estaActivo('/completas')}">
+				<a href="#/completas" >Completas</a>
+			</span>
 		</div>
 	</div>
 </div>

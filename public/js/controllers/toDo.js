@@ -1,31 +1,17 @@
-app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
+app.controller('toDoCtrl',['$scope','factoryTareas','$location',function($scope,tareas,$location)
 {
 	//Inicio cantidad de tareas
 	$scope.cantidad=0;
 	$scope.tareas=[];
-	$scope.status ='';
-	$scope.filtro=undefined;
+	$scope.todasTareas=[];
+	
 	getTareas();
 
-/**************************     
-	Funcion pedir tareas               
-
-***************************/
-	function getTareas() {
-        tareas.getAll()
-            .success(function (data) {
-                $scope.tareas = data;
-                $scope.cantidad= $scope.tareas.length;
-            })
-            .error(function (error) {
-                console.log('No se puedo cargar los datos: ' + error.message);
-            });
-    }
-/**************************     
-	Funcion pedir tareas               
+/************************************     
+	Funcion comprueba si hay tareas               
 	
-***************************/
-    $scope.estaVacio= function()
+*************************************/
+    $scope.estaVacio = function()
     {
     	if($scope.cantidad===0)
     	{
@@ -33,53 +19,77 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
     	}else{
     		return false;
     	}
-    }
+    };
+/***************************************************************************     
+	Funcion activa la clase active si el paramentro es igual a la url               
+	
+****************************************************************************/
 
-	$scope.setFiltro = function(estado)
+	$scope.estaActivo = function (viewLocation) 
 	{
-		$scope.filtro=estado;
-	}
-
-	$scope.estaActivo = function(estado)
-	{
-		if(estado==='pendientes' && $scope.filtro === false)
-			{return true}
-		else if(estado==='todas' && $scope.filtro === undefined)
-			{return true}
-		else if(estado==='completas' && $scope.filtro === true)
-			{return true}
-		else
-			{return false}
+    	if(viewLocation === $location.path())
+    	{
+    		$scope.filtrarTareas();
+    		return true;
+    	}else if($location.path()==='' && viewLocation === '/todas'){
+    		$scope.filtrarTareas();
+    		return true;
+    	}else{
+    		return false;
+    	}
 	};
 /******************************************************    
-	Funcion contar tareas (Todas/Completas/Pendientes)               
-	
+	Evento cambio ruta 
+
 *******************************************************/
-   	function actualizarContador()
+	$scope.$on('$locationChangeSuccess', function(event, newUrl, oldUrl){
+    	$scope.filtrarTareas();
+	});
+/******************************************************    
+	Funcion contar tareas (Todas/Completas/Pendientes)               
+	Todas:       null
+	Completas:   true
+	Pendientes:  false
+*******************************************************/
+	$scope.filtrarTareas = function()
+	{
+		if($location.path()==='/completas')
+		{
+			actualizarTareas(true);
+		}else if($location.path()==='/pendientes')
+		{
+			actualizarTareas(false);
+		}
+		else{
+			actualizarTareas(null);
+		}	
+	};
+   	function actualizarTareas(filtro)
    	{
    		$scope.cantidad=0;
-   		if($scope.filtro === undefined)
+   		$scope.tareas=[];
+   		//Si el filtro es null es que estamos en todas las tareas
+   	  if(filtro === null)
        {
-       		$scope.cantidad=$scope.tareas.length;
+     		$scope.tareas = $scope.todasTareas;
+       		$scope.cantidad = $scope.todasTareas.length;
+       //Sino el filtro puede ser Pendientes(false) o Completas(true)
        }else{
-	       $scope.tareas.map(function(ele)
+       		//Recorre todo el array
+	       $scope.todasTareas.map(function(ele)
 		       	{
-		       		if(ele.completada === $scope.filtro)
+		       		//Si la propiedad completada del elemento
+		       		//es igual al filtro (true o false)
+		       		//Se agrega a tareas y se incrementa el contador
+		       		if(ele.completada === filtro)
 		       		{
-		       			 $scope.cantidad=$scope.cantidad+1;
+		       			$scope.tareas.push(ele);
+		       			$scope.cantidad=$scope.cantidad+1;
 		       		}
-		       	}
-	       	);
+		       	});
    		}
    	}
-/********************************************************************     
-	Evento que escucha el cambio de filtro y actualizar el contador              
-	
-*********************************************************************/
-	$scope.$watch('filtro', function() {
-       $scope.cantidad=0;
-       actualizarContador();
-   	});
+
 /********************************************     
 	Funcion eliminar tarea por id               
 	
@@ -89,14 +99,28 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
 		tareas.borrar(tarea._id)
             .success(function(res) {
             	var indice=$scope.tareas.indexOf(tarea);
-				console.log("ELIMINO: Se elimino la tarea ´"+tarea.titulo+"´");
+				console.log('ELIMINO: Se elimino la tarea ´'+tarea.titulo+'´');
 				$scope.tareas.splice(indice,1);
-				actualizarContador();
             })
             .error(function (error) {
                 console.log('No se puedo borrar la tarea: ' + error.message);
             });
-	}
+	};
+
+/**************************     
+	Funcion pedir tareas               
+
+***************************/
+	function getTareas() {
+        tareas.getAll()
+            .success(function (data) {
+                $scope.todasTareas = data;
+				$scope.filtrarTareas();
+            })
+            .error(function (error) {
+                console.log('No se puedo cargar los datos: ' + error.message);
+            });
+    }
 /********************************************     
 	Funcion agregar nueva tareas               
 	
@@ -108,13 +132,12 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
             .success(function (data) {
             	$scope.tareas.push(data);
 				$scope.tarea='';
-				console.log("NUEVO: se agrego la tarea ´"+titulo+"´");
-				actualizarContador();
+				console.log('NUEVO: se agrego la tarea ´'+titulo+'´');
             })
             .error(function (error) {
                 alert('No se puedo cargar los datos: ' + error.message);
             });
-	}
+	};
 /**************************************************************     
 	Funcion cambiar estado de tarea (completa o incompleta)               
 	
@@ -124,10 +147,10 @@ app.controller('toDoCtrl',['$scope','factoryTareas',function($scope,tareas)
 		var indice=$scope.tareas.indexOf(tarea);
 		$scope.tareas[indice].completada=!tarea.completada;
 		tareas.actualizar(tarea)
-		.success(function (data) {	
-			console.log("CAMBIO: La tarea ´"+tarea.nombre+"´ ahora esta "+$scope.tareas[indice].completa);
-			actualizarContador();
-		});
-	}
-}
-]);
+		.success(function (tarea) {	
+			console.log(
+				'CAMBIO: La tarea ´'+$scope.tareas[indice].titulo+
+				'´ ahora esta '+$scope.tareas[indice].completada);
+			});
+	};
+}]);
