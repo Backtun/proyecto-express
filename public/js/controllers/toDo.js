@@ -101,6 +101,7 @@ app.controller('toDoCtrl',['$scope','factoryTareas','$location',function($scope,
             	var indice=$scope.tareas.indexOf(tarea);
 				console.log('ELIMINO: Se elimino la tarea ´'+tarea.titulo+'´');
 				$scope.tareas.splice(indice,1);
+				$scope.filtrarTareas();
             })
             .error(function (error) {
                 console.log('No se puedo borrar la tarea: ' + error.message);
@@ -132,6 +133,7 @@ app.controller('toDoCtrl',['$scope','factoryTareas','$location',function($scope,
             .success(function (data) {
             	$scope.tareas.push(data);
 				$scope.tarea='';
+				$scope.filtrarTareas();
 				console.log('NUEVO: se agrego la tarea ´'+titulo+'´');
             })
             .error(function (error) {

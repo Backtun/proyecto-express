@@ -27,32 +27,30 @@ node app.js
 O si estas desarrollando y quieres que se actualice en forma continua, instala `nodemon` y corre
 
 ```
-nodemon app.js
+npm run dev
 ```
 
-Cualquier duda consulta en la comunidad de Acamica.
+## Caracteristicas
 
-¡Buena suerte!
-
-Librerías utilizadas
+Librerías utilizadas en el cliente
 --------------------
 
 ### Material Design Lite
 Porque la estética importa, decidimos hacer el proyecto usando Material Design. Google provee una librería que
 incluye CSS y un poco de JS llamada [Material Design Lite](http://www.getmdl.io/). El *lite* es porque no requiere
-de otros frameworks y es bastante minimalista. Google también ofrece [Angular Material](https://material.angularjs.org/latest/#/) si trabajamos
-con Angular, o
-[Paper Elements](https://www.polymer-project.org/0.5/docs/elements/) si trabajamos con polymer.
+de otros frameworks y es bastante minimalista. 
 
-### Handlebars
-Para dibujar las vistas usamos el motor de templates [handlebars](http://handlebarsjs.com/).
+### Angular.js
+Esta página es un SPA (single-page application) o aplicación de página única es una aplicación web, para dar una mejor experiencia al usuario en la velociadad de interacción. 
+[Angular](http://www.angular.com/).
 
-### Lodash
-Para resolver tareas simples como filtrar los elementos de un mapa, usamos la librería utilitaria [lodash](https://lodash.com/).
+Librerías utilizadas en el servidor
+--------------------
+### Express
+Es un micro Framework, carga solo lo necesario para funcionar, nos permite realizar aplicaciones en node.js rapidamente. 
 
-### Express-session
-La aplicación soporta un concepto de usuarios muy básico, cada navegador "se convierte" en un pseudo usuario por tener una sesión.
-Esto es así para que cuando muchos usuarios accedan al mismo tiempo, no vean las tareas de los otros usuarios.
+[Express.js](http://expressjs.com/es/).
 
-### UUID
-Esta es una librería que genera ids aleatorios únicos, y lo utilizamos al no tener una base de datos que nos garantice esto.
+### MongoDB
+Una base de datos orientada a documentos (NoSQL) en la cual persistimos los datos de nuestra aplicación.
+[Driver Mongodb para node.js](http://mongodb.github.io/node-mongodb-native/2.0/).
