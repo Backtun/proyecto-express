@@ -30,7 +30,8 @@ O si estas desarrollando y quieres que se actualice en forma continua, instala `
 npm run dev
 ```
 
-## Caracteristicas
+Caracteristicas
+========================
 
 Librerías utilizadas en el cliente
 --------------------
@@ -46,10 +47,9 @@ Esta página es un SPA (single-page application) o aplicación de página única
 
 Librerías utilizadas en el servidor
 --------------------
-### Express
-Es un micro Framework, carga solo lo necesario para funcionar, nos permite realizar aplicaciones en node.js rapidamente. 
 
-[Express.js](http://expressjs.com/es/).
+### Express
+Es un micro Framework, carga solo lo necesario para funcionar, nos permite realizar aplicaciones en node.js rapidamente.[Express.js](http://expressjs.com/es/).
 
 ### MongoDB
 Una base de datos orientada a documentos (NoSQL) en la cual persistimos los datos de nuestra aplicación.

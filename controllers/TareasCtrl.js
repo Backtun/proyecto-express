@@ -96,7 +96,7 @@ exports.actualizar = function(req, res) {
 
             .then(function(resultado)
             {
-                console.log('update api/tareas '+req.params.id);    
+                console.log('Update api/tareas '+req.params.id);    
                 res.status(200).send('Tarea actualizada.');
             })
             .catch(function (err) {

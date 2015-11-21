@@ -1,4 +1,4 @@
-app.controller('toDoCtrl',['$scope','factoryTareas','$location',function($scope,tareas,$location)
+app.controller('toDoCtrl',['$scope','factoryTareas','$location',function($scope,rest,$location)
 {
 	//Inicio cantidad de tareas
 	$scope.cantidad=0;
@@ -94,26 +94,30 @@ app.controller('toDoCtrl',['$scope','factoryTareas','$location',function($scope,
 	Funcion eliminar tarea por id               
 	
 *********************************************/	
-	$scope.eliminar= function(tarea)
+	$scope.ajaxEliminar= function(tarea)
 	{
-		tareas.borrar(tarea._id)
+		rest.borrar(tarea._id)
             .success(function(res) {
-            	var indice=$scope.tareas.indexOf(tarea);
-				console.log('ELIMINO: Se elimino la tarea ´'+tarea.titulo+'´');
-				$scope.tareas.splice(indice,1);
-				$scope.filtrarTareas();
+            	$scope.eliminar(tarea);
             })
             .error(function (error) {
                 console.log('No se puedo borrar la tarea: ' + error.message);
             });
 	};
-
+	
+	$scope.eliminar= function(tarea)
+	{
+		var indice=$scope.tareas.indexOf(tarea);
+		console.log('ELIMINO: Se elimino la tarea ´'+tarea.titulo+'´');
+		$scope.tareas.splice(indice,1);
+		$scope.filtrarTareas();
+	};
 /**************************     
 	Funcion pedir tareas               
 
 ***************************/
 	function getTareas() {
-        tareas.getAll()
+        rest.getAll()
             .success(function (data) {
                 $scope.todasTareas = data;
 				$scope.filtrarTareas();
@@ -127,32 +131,58 @@ app.controller('toDoCtrl',['$scope','factoryTareas','$location',function($scope,
 	
 *********************************************/
 
-	$scope.agregar = function(titulo) 
+	$scope.ajaxAgregar = function(titulo) 
 	{
-		tareas.agregar({'titulo':titulo})
-            .success(function (data) {
-            	$scope.tareas.push(data);
-				$scope.tarea='';
-				$scope.filtrarTareas();
-				console.log('NUEVO: se agrego la tarea ´'+titulo+'´');
+		rest.agregar({'titulo':titulo})
+            .success(function (data) 
+            {
+            	 $scope.agregar(data);
             })
             .error(function (error) {
                 alert('No se puedo cargar los datos: ' + error.message);
             });
 	};
+
+	$scope.agregar = function(tarea)
+	{
+		$scope.todasTareas.push(tarea);
+		$scope.tarea='';
+		$scope.filtrarTareas();
+		console.log('NUEVO: se agrego la tarea ´'+tarea.titulo+'´');        
+	};
+
 /**************************************************************     
 	Funcion cambiar estado de tarea (completa o incompleta)               
 	
 ***************************************************************/
-	$scope.cambiarEstado= function(tarea)
+	$scope.ajaxActualizar= function(tarea)
 	{
-		var indice=$scope.tareas.indexOf(tarea);
-		$scope.tareas[indice].completada=!tarea.completada;
-		tareas.actualizar(tarea)
-		.success(function (tarea) {	
-			console.log(
-				'CAMBIO: La tarea ´'+$scope.tareas[indice].titulo+
-				'´ ahora esta '+$scope.tareas[indice].completada);
-			});
+		//Guardo tarea en variable auxiliar
+		var paramTarea=tarea;
+		//Cambio estado de la tarea
+		tarea.completada=!tarea.completada;
+
+		rest.actualizar(tarea)
+			.success(function (res) 
+			{
+				$scope.actualizar(paramTarea);
+			})
+			.error(function (error) {
+                alert('No se actualizar la tarea: ' + error.message);
+            });
+	};
+
+	$scope.actualizar= function(tarea)
+	{
+		//Busco la tarea pasada por parametro en el array de tareas
+		var indice=$scope.todasTareas.indexOf(tarea);
+		//Cambio el estado de la tarea
+		$scope.todasTareas[indice].completada= !$scope.todasTareas.completada;
+
+		//$scope.filtrarTareas();
+
+		console.log(
+				'CAMBIO: La tarea ´'+$scope.todasTareas[indice].titulo+
+				'´ ahora esta '+$scope.todasTareas[indice].completada);
 	};
 }]);
