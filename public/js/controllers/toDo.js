@@ -107,9 +107,9 @@ app.controller('toDoCtrl',['$scope','factoryTareas','$location',function($scope,
 	
 	$scope.eliminar= function(tarea)
 	{
-		var indice=$scope.tareas.indexOf(tarea);
+		var indice=$scope.todasTareas.indexOf(tarea);
 		console.log('ELIMINO: Se elimino la tarea ´'+tarea.titulo+'´');
-		$scope.tareas.splice(indice,1);
+		$scope.todasTareas.splice(indice,1);
 		$scope.filtrarTareas();
 	};
 /**************************     
@@ -179,7 +179,7 @@ app.controller('toDoCtrl',['$scope','factoryTareas','$location',function($scope,
 		//Cambio el estado de la tarea
 		$scope.todasTareas[indice].completada= !$scope.todasTareas.completada;
 
-		//$scope.filtrarTareas();
+		$scope.filtrarTareas();
 
 		console.log(
 				'CAMBIO: La tarea ´'+$scope.todasTareas[indice].titulo+
