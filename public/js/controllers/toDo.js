@@ -6,7 +6,18 @@ app.controller('toDoCtrl',['$scope','factoryTareas','$location',function($scope,
 	$scope.todasTareas=[];
 	
 	getTareas();
-
+/********************************************     
+	Funcion escucha el evento boton Enter               
+	
+*********************************************/
+	$scope.presionarEnter= function($event,tarea)
+	{
+    	var keyCode = $event.which || $event.keyCode;
+    	if (keyCode === 13) 
+    	{
+        	$scope.ajaxAgregar(tarea);
+        }
+    };
 /************************************     
 	Funcion comprueba si hay tareas               
 	
@@ -176,9 +187,7 @@ app.controller('toDoCtrl',['$scope','factoryTareas','$location',function($scope,
 	{
 		//Busco la tarea pasada por parametro en el array de tareas
 		var indice=$scope.todasTareas.indexOf(tarea);
-		//Cambio el estado de la tarea
-		//$scope.todasTareas[indice].completada= !$scope.todasTareas.completada;
-
+		
 		$scope.filtrarTareas();
 
 		console.log(

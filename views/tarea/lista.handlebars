@@ -1,7 +1,7 @@
 <div class="task-list mdl-card mdl-shadow--2dp">
 	<div>
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<input class="mdl-textfield__input" ng-model="tarea" type="text" id="titulo" name="titulo" />
+				<input class="mdl-textfield__input" ng-model="tarea" type="text" ng-keypress="presionarEnter($event,tarea)" id="titulo" name="titulo" />
 				<label class="mdl-textfield__label" for="titulo">Qué quieres hacer hoy..</label>
 			</div>
 			
