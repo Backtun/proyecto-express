@@ -177,7 +177,7 @@ app.controller('toDoCtrl',['$scope','factoryTareas','$location',function($scope,
 		//Busco la tarea pasada por parametro en el array de tareas
 		var indice=$scope.todasTareas.indexOf(tarea);
 		//Cambio el estado de la tarea
-		$scope.todasTareas[indice].completada= !$scope.todasTareas.completada;
+		//$scope.todasTareas[indice].completada= !$scope.todasTareas.completada;
 
 		$scope.filtrarTareas();
 
