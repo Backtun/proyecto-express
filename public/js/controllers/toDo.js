@@ -188,6 +188,8 @@ app.controller('toDoCtrl',['$scope','factoryTareas','$location',function($scope,
 		//Busco la tarea pasada por parametro en el array de tareas
 		var indice=$scope.todasTareas.indexOf(tarea);
 		
+		$scope.todasTareas[indice].completada=!$scope.todasTareas[indice].completada;
+
 		$scope.filtrarTareas();
 
 		console.log(

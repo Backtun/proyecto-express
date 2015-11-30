@@ -1,4 +1,4 @@
-<div class="task-list mdl-card mdl-shadow--2dp">
+{{!-- <div class="task-list mdl-card mdl-shadow--2dp">
 	<div>
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 				<input class="mdl-textfield__input" ng-model="tarea" type="text" ng-keypress="presionarEnter($event,tarea)" id="titulo" name="titulo" />
@@ -38,4 +38,40 @@
 			</span>
 		</div>
 	</div>
-</div>
+</div> --}}
+
+<md-content md-theme="docs-dark" layout-padding layout="row" layout-sm="column">
+    <md-input-container flex>
+      <label>Agregar nueva Tarea</label>
+      <input ng-model="tarea" ng-keypress="presionarEnter($event,tarea)">
+    </md-input-container>
+</md-content>
+
+<md-list ng-cloak>
+	<div class="task-item" ng-show="estaVacio()">
+		<h3>No tenes ninguna tarea.</h3>
+	</div>
+	  <md-subheader class="md-no-sticky">Lista de Tareas</md-subheader>
+	  <md-list-item ng-repeat="tarea in tareas | filter: {completa:filtro}" ng-hide="estaVacio()" >
+
+	   		<md-checkbox ng-model="tarea.completada" ng-click='ajaxActualizar(tarea)'></md-checkbox>
+	    	<p>[{tarea.titulo}]</p>
+	   		<md-button class="secondary-button-padding md-raised md-warn md-button md-ink-ripple" ng-click='ajaxEliminar(tarea)'>Borrar</md-button>
+	  </md-list-item>
+	<div class="mdl-card__actions mdl-grid">
+		<div class="mdl-cell mdl-cell--5-col">
+			<span class="pending-task-count">[{cantidad}]</span> tareas
+		</div>
+		<div class="mdl-cell mdl-cell--7-col">
+			<span class="task-filter" ng-class="{active: estaActivo('/todas')}">
+				<a href="#/todas">Todas</a>
+			</span>
+			<span class="task-filter" ng-class="{active: estaActivo('/pendientes')}">
+				<a href="#/pendientes">Pendientes</a>
+			</span>
+			<span class="task-filter" ng-class="{active: estaActivo('/completas')}">
+				<a href="#/completas" >Completas</a>
+			</span>
+		</div>
+	</div>
+</md-list>
