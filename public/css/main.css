@@ -107,3 +107,8 @@
     border: 1px solid;
     border-color: rgba(0,0,0,0.2);
 }
+
+.md-list-item-inner
+{
+    border-bottom: 1px solid #369;
+}
